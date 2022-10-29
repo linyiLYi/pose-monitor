@@ -1,14 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="tfe_pe_app_name">让爷康康</string>
-    <string name="tfe_pe_request_permission">需要获取相机权限</string>
+    <string name="tfe_pe_request_permission">未获得相机权限，应用无法运行</string>
     <string name="tfe_pe_tv_score">置信分数: %.2f</string>
-    <string name="tfe_pe_tv_model">模型版本: </string>
+    <string name="tfe_pe_tv_model">模型版本: MoveNet Thunder</string>
     <string name="tfe_pe_tv_fps">检测帧率: %d</string>
-    <string name="tfe_pe_tv_debug">DEBUG: %s</string>
+    <string name="tfe_pe_tv_debug">调试信息: %s</string>
     <string name="tfe_pe_tv_device">运算设备: </string>
-    <string name="tfe_pe_tv_classification_value">- %s</string>
-    <string name="tfe_pe_tv_pose_classification">姿态识别</string>
-    <string name="tfe_pe_tv_tracking">Tracker: </string>
-    <string name="tfe_pe_gpu_error">Movenet MultiPose 不支持 GPU，继续使用 CPU.</string>
 </resources>
