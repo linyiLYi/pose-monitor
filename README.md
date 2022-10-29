@@ -32,7 +32,7 @@
 
 ### 训练自己的分类网络
 
-<image align="right" src="doc_images/labeled_movenet_result.png" alt="17 Keypoints detected by MoveNet" width=20%>
+<image align="right" src="doc_images/labeled_movenet_result.png" alt="17 Keypoints detected by MoveNet" width=25%>
 
 除了 MoveNet Thunder，本项目还使用了一个简单的全连接网络对 MoveNet 输出的姿态信息（人体 17 个关键点的坐标）进行分类，用来判断画面中的人处于“标准坐姿”、“翘二郎腿”、“脖子前倾驼背”中的哪一种状态。关于该分类网络的介绍以及训练过程实际演示，可以参考 Tensorflow Lite 的 [Jupyter Notebook 教程](https://github.com/tensorflow/tensorflow/blob/master/tensorflow/lite/g3doc/tutorials/pose_classification.ipynb)，或是本项目中修改并注释过的[版本]()。本项目为了对“标准坐姿”、“翘二郎腿”、“脖子前倾驼背”三种姿态进行分类，为每种姿态采集了约 300 张照片作为训练集（共 876 张照片），为每种姿态采集了约 30 张作为测试集（共 74 张照片）。其中训练集与测试集为不同人物主体，以此来在训练过程中及时发现模型的过拟合问题。训练数据应存放于 `main/pose_data/train/` 路径下的 `standard`、`crossleg`、`forwardhead` 
 三个文件夹中，测试数据则位于 `main/pose_data/test/` 路径下。本项目中用于训练分类网络的 [Jupyter Notebook]() 会将原始数据自动转化为训练数据包，在此过程中生成每张照片的 MoveNet 检测结果，并将每张照片标记为三种姿态中的一种，最后将所有信息存储在 `main/pose_data/train_data.csv`、`main/pose_data/test_data.csv`，并生成记录标签信息的文本文件 `main/pose_data/pose_labels.txt`。在 Notebook 中训练完毕后，在 `main/pose_data/` 路径下会自动生成 `.tflite` 权重文件，导入至 Android Studio 项目中，替换掉本项目中的 `android\app\src\main\assets\classifier.tflite` 即可使用。
@@ -43,10 +43,10 @@
 
 <table width="100%">
  <tr>
-  <td width="25%"><img src="doc_images/screenshot_01.jpg"></td>
-  <td width="25%"><img src="doc_images/screenshot_02.jpg"></td>
-  <td width="25%"><img src="doc_images/screenshot_03.jpg"></td>
-  <td width="25%"><img src="doc_images/screenshot_04.jpg"></td>
+  <td width="25%" style="line-height:0;"><img src="doc_images/screenshot_01.jpg"></td>
+  <td width="25%" style="line-height:0;"><img src="doc_images/screenshot_02.jpg"></td>
+  <td width="25%" style="line-height:0;"><img src="doc_images/screenshot_03.jpg"></td>
+  <td width="25%" style="line-height:0;"><img src="doc_images/screenshot_04.jpg"></td>
  </tr>
 <table>
 
