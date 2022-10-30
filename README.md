@@ -37,9 +37,9 @@
 除了 MoveNet Thunder，本项目还使用了一个简单的全连接网络对 MoveNet 输出的姿态信息（人体 17 个关键点的坐标）进行分类，用来判断画面中的人处于“标准坐姿”、“翘二郎腿”、“脖子前倾驼背”中的哪一种状态。关于该分类网络的介绍以及训练过程实际演示，可以参考 Tensorflow Lite 的 [Jupyter Notebook 教程](https://github.com/tensorflow/tensorflow/blob/master/tensorflow/lite/g3doc/tutorials/pose_classification.ipynb)，或是本项目中修改并注释过的[版本]()。本项目为了对“标准坐姿”、“翘二郎腿”、“脖子前倾驼背”三种姿态进行分类，为每种姿态采集了约 300 张照片作为训练集（共 876 张照片），为每种姿态采集了约 30 张作为测试集（共 74 张照片）。其中训练集与测试集为不同人物主体，以此来在训练过程中及时发现模型的过拟合问题。训练数据应存放于 `main/pose_data/train/` 路径下的 `standard`、`crossleg`、`forwardhead` 
 三个文件夹中，测试数据则位于 `main/pose_data/test/` 路径下。本项目中用于训练分类网络的 [Jupyter Notebook]() 会将原始数据自动转化为训练数据包，在此过程中生成每张照片的 MoveNet 检测结果，并将每张照片标记为三种姿态中的一种，最后将所有信息存储在 `main/pose_data/train_data.csv`、`main/pose_data/test_data.csv`，并生成记录标签信息的文本文件 `main/pose_data/pose_labels.txt`。在 Notebook 中训练完毕后，在 `main/pose_data/` 路径下会自动生成 `.tflite` 权重文件，导入至 Android Studio 项目中，替换掉本项目中的 `android\app\src\main\assets\classifier.tflite` 即可使用。
 
-## 实际运行
+## 运行效果
 
-将手机连接至电脑，Android Studio 可以对本项目进行编译并将 App 安装至手机。打开应用，授权使用相机后，App 便可以监测人体坐姿并根据实时检测结果给出语音提示。为了避免程序误报，App 加入了一系列判断逻辑以提高 Precision（精确率）。连续 30 帧出现不健康坐姿时，程序会进入警戒状态，此时如果接下来 30 帧画面同样均判定为不健康坐姿，程序才会发出语音提示。效果如图所示：
+将手机连接至电脑，Android Studio 可以对本项目进行编译并将 App 安装至手机。打开应用，授权使用相机后，App 便可以监测人体坐姿并根据实时检测结果给出语音提示。程序的显示界面主要分为上、中、下三部分，顶部显示 AI 对当前姿态的判断结果，中部为摄像头实时画面，底部为信息显示界面，其中“运算设备”一栏可以选择不同选项，使用 CPU、GPU 或 NNAPI（Hexagon AI 加速器）进行计算，其中 NNAPI 速度最快，也最省电。为了避免程序误报，App 加入了一系列判断逻辑以提高 Precision（精确率）。连续 30 帧出现不健康坐姿时，程序会进入警戒状态，此时如果接下来 30 帧画面同样均判定为不健康坐姿，程序才会发出语音提示。效果如图所示：
 
 <table width="100%">
  <tr>

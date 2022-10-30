@@ -151,9 +151,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun openCamera() {
         /** 音频播放 */
-        val crosslegPlayer = MediaPlayer.create(this, R.raw.crossleg_1)
-        val forwardheadPlayer = MediaPlayer.create(this, R.raw.forwardhead_1)
-        val standardPlayer = MediaPlayer.create(this, R.raw.standard_2)
+        val crosslegPlayer = MediaPlayer.create(this, R.raw.crossleg)
+        val forwardheadPlayer = MediaPlayer.create(this, R.raw.forwardhead)
+        val standardPlayer = MediaPlayer.create(this, R.raw.standard)
         var crosslegPlayerFlag = true
         var forwardheadPlayerFlag = true
         var standardPlayerFlag = true
