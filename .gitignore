@@ -15,4 +15,4 @@ main/pose_data/train/standard/*
 
 ### Upload example pictures
 !main/pose_data/train/standard/standard_012.jpg
-!main/pose_data/train/standard/forwardhead_010.jpg
+!main/pose_data/train/forwardhead/forwardhead_010.jpg
