@@ -4,6 +4,23 @@
 
 “让爷康康”是一款应用于安卓平台的手机应用，可以实时监测不良坐姿并给出语音提示。本项目主要基于 [Tensorflow Lite 官方示例 - 姿态估计](https://github.com/tensorflow/examples/tree/master/lite/examples/pose_estimation/android)实现，其中 AI 部分包含用于姿态估计的 [MoveNet](https://blog.tensorflow.org/2021/05/next-generation-pose-detection-with-movenet-and-tensorflowjs.html)，以及用于对姿态进行分类的[全连接网络](https://github.com/tensorflow/tensorflow/blob/master/tensorflow/lite/g3doc/tutorials/pose_classification.ipynb)。本应用不需要联网使用，所有 AI 特性均在手机本地运行，不需要将视频画面传输至外部服务器，仅需要摄像头权限用于获取姿态画面。视频介绍可以点击 [bilibili]() 或 [YouTube]()。
 
+### 文件结构
+
+```bash
+├───android
+│   ├───app
+│   │   └───src
+│   └───gradle
+├───doc_images
+├───main
+│   └───pose_data
+│       └───train
+│           ├───forwardhead
+│           └───standard
+```
+
+项目的两个主要文件夹为 `android/` 与 `main/`。`android/` 下包含了所有与移动 App 相关的代码，`main/` 文件夹下则是分类网络的训练数据与记录了训练过程的 `pose_classification.ipynb` 文件，训练数据存放在 `main/pose_data/train/` 目录下，为精简项目体积，只上传了 `pose_classification.ipynb` 用到的两张示例图片。如果需要训练分类模型，可以按 `pose_classification.ipynb` 上面的指示填充 `main/pose_data/train/` 与 `main/pose_data/test/` 两个文件夹。`doc_images/` 文件夹下是本文档所用到的示例图片，并不包括项目代码。
+
 ## 在 Android Studio 中编译程序并运行
 
 ### 准备工作
