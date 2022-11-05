@@ -9,8 +9,8 @@
     <string name="tfe_pe_tv_device">Device: </string>
 
     <string-array name="tfe_pe_device_name">
-        <item>NNAPI</item>
-        <item>GPU</item>
         <item>CPU</item>
+        <item>GPU</item>
+        <item>NNAPI</item>
     </string-array>
 </resources>
