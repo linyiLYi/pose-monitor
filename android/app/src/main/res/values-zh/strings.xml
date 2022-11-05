@@ -7,4 +7,10 @@
     <string name="tfe_pe_tv_fps">检测帧率: %d</string>
     <string name="tfe_pe_tv_debug">调试信息: %s</string>
     <string name="tfe_pe_tv_device">运算设备: </string>
+    <string name="tfe_pe_tv_camera">摄像头: </string>
+
+    <string-array name="tfe_pe_camera_name">
+        <item>后置</item>
+        <item>前置</item>
+    </string-array>
 </resources>

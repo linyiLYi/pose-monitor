@@ -40,6 +40,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import lyi.linyi.posemon.camera.CameraSource
 import lyi.linyi.posemon.data.Device
+import lyi.linyi.posemon.data.Camera
 import lyi.linyi.posemon.ml.ModelType
 import lyi.linyi.posemon.ml.MoveNet
 import lyi.linyi.posemon.ml.PoseClassifier
@@ -54,6 +55,8 @@ class MainActivity : AppCompatActivity() {
 
     /** 修改默认计算设备：CPU、GPU、NNAPI（AI加速器） */
     private var device = Device.CPU
+    /** 修改默认摄像头：FRONT、BACK */
+    private var selectedCamera = Camera.BACK
 
     /** 定义几个计数器 */
     private var forwardheadCounter = 0
@@ -73,6 +76,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var tvFPS: TextView
     private lateinit var tvScore: TextView
     private lateinit var spnDevice: Spinner
+    private lateinit var spnCamera: Spinner
 
     private var cameraSource: CameraSource? = null
     private var isClassifyPose = true
@@ -101,6 +105,16 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private var changeCameraListener = object : AdapterView.OnItemSelectedListener {
+        override fun onItemSelected(p0: AdapterView<*>?, view: View?, direction: Int, id: Long) {
+            changeCamera(direction)
+        }
+
+        override fun onNothingSelected(p0: AdapterView<*>?) {
+            /** 如果用户未选择摄像头，使用默认摄像头进行拍摄 */
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -117,6 +131,7 @@ class MainActivity : AppCompatActivity() {
 
         tvFPS = findViewById(R.id.tvFps)
         spnDevice = findViewById(R.id.spnDevice)
+        spnCamera = findViewById(R.id.spnCamera)
         surfaceView = findViewById(R.id.surfaceView)
         initSpinner()
         if (!isCameraPermissionGranted()) {
@@ -161,7 +176,7 @@ class MainActivity : AppCompatActivity() {
         if (isCameraPermissionGranted()) {
             if (cameraSource == null) {
                 cameraSource =
-                    CameraSource(surfaceView, object : CameraSource.CameraSourceListener {
+                    CameraSource(surfaceView, selectedCamera, object : CameraSource.CameraSourceListener {
                         override fun onFPSListener(fps: Int) {
 
                             /** 解释一下，tfe_pe_tv 的意思：tensorflow example、pose estimation、text view */
@@ -299,6 +314,16 @@ class MainActivity : AppCompatActivity() {
             spnDevice.adapter = adapter
             spnDevice.onItemSelectedListener = changeDeviceListener
         }
+
+        ArrayAdapter.createFromResource(
+            this,
+            R.array.tfe_pe_camera_name, android.R.layout.simple_spinner_item
+        ).also { adapter ->
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+
+            spnCamera.adapter = adapter
+            spnCamera.onItemSelectedListener = changeCameraListener
+        }
     }
 
     /** 在程序运行过程中切换运算设备 */
@@ -311,6 +336,20 @@ class MainActivity : AppCompatActivity() {
         if (device == targetDevice) return
         device = targetDevice
         createPoseEstimator()
+    }
+
+    /** 在程序运行过程中切换摄像头 */
+    private fun changeCamera(direaction: Int) {
+        val targetCamera = when (direaction) {
+            0 -> Camera.BACK
+            else -> Camera.FRONT
+        }
+        if (selectedCamera == targetCamera) return
+        selectedCamera = targetCamera
+
+        cameraSource?.close()
+        cameraSource = null
+        openCamera()
     }
 
     private fun createPoseEstimator() {
