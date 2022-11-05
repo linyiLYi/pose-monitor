@@ -304,9 +304,9 @@ class MainActivity : AppCompatActivity() {
     /** 在程序运行过程中切换运算设备 */
     private fun changeDevice(position: Int) {
         val targetDevice = when (position) {
-            0 -> Device.NNAPI
+            0 -> Device.CPU
             1 -> Device.GPU
-            else -> Device.CPU
+            else -> Device.NNAPI
         }
         if (device == targetDevice) return
         device = targetDevice
