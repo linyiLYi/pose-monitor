@@ -53,7 +53,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var surfaceView: SurfaceView
 
     /** 修改默认计算设备：CPU、GPU、NNAPI（AI加速器） */
-    private var device = Device.NNAPI
+    private var device = Device.CPU
 
     /** 定义几个计数器 */
     private var forwardheadCounter = 0
