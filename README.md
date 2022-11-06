@@ -71,3 +71,5 @@
 
 ## 鸣谢
 本项目主要基于 [Tensorflow Lite Pose Estimation 示例项目](https://github.com/tensorflow/examples/tree/master/lite/examples/pose_estimation/android)，离不开 [Tensorflow](https://www.tensorflow.org/?hl=zh-cn)、[Jupyter Notebook](https://jupyter.org/) 等开源框架、开源开发工具。感谢各位程序工作者对开源社区的贡献！
+
+- [2022.11.06] 感谢 @zhengbangbo 加入对前置摄像头的支持。（注：前置摄像头只录上半身可能导致“跷二郎腿”姿势识别不稳定，但可以支持未来开发更多上半身姿势判断。）
