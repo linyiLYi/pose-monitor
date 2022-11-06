@@ -74,9 +74,8 @@
             <TextView
                 android:id="@+id/tvDevice"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="24dp"
                 android:layout_marginStart="16dp"
-                android:layout_marginBottom="2dp"
                 android:text="@string/tfe_pe_tv_device"
                 app:layout_constraintBottom_toTopOf="@+id/tvModel"
                 app:layout_constraintEnd_toStartOf="@+id/spnDevice"
@@ -86,11 +85,29 @@
             <Spinner
                 android:id="@+id/spnDevice"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="24dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/tvDevice"
                 app:layout_constraintTop_toBottomOf="@+id/tvDebug" />
 
+            <TextView
+                android:id="@+id/tvCamera"
+                android:layout_width="wrap_content"
+                android:layout_height="24dp"
+                android:layout_marginStart="16dp"
+                android:text="@string/tfe_pe_tv_camera"
+                app:layout_constraintBottom_toTopOf="@+id/tvModel"
+                app:layout_constraintEnd_toStartOf="@+id/spnCamera"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvDevice" />
+
+            <Spinner
+                android:id="@+id/spnCamera"
+                android:layout_width="0dp"
+                android:layout_height="24dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tvCamera"
+                app:layout_constraintTop_toBottomOf="@+id/spnDevice" />
 
             <TextView
                 android:id="@+id/tvModel"
@@ -101,7 +118,7 @@
                 android:text="@string/tfe_pe_tv_model"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvDevice" />
+                app:layout_constraintTop_toBottomOf="@+id/tvCamera" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </RelativeLayout>

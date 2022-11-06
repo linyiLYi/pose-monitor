@@ -35,6 +35,7 @@ import android.view.SurfaceView
 import kotlinx.coroutines.suspendCancellableCoroutine
 import lyi.linyi.posemon.VisualizationUtils
 import lyi.linyi.posemon.YuvToRgbConverter
+import lyi.linyi.posemon.data.Camera
 import lyi.linyi.posemon.data.Person
 import lyi.linyi.posemon.ml.PoseClassifier
 import lyi.linyi.posemon.ml.PoseDetector
@@ -44,6 +45,7 @@ import kotlin.coroutines.resumeWithException
 
 class CameraSource(
     private val surfaceView: SurfaceView,
+    private val selectedCamera: Camera,
     private val listener: CameraSourceListener? = null
 ) {
 
@@ -110,7 +112,14 @@ class CameraSource(
                 yuvConverter.yuvToRgb(image, imageBitmap)
                 // Create rotated version for portrait display
                 val rotateMatrix = Matrix()
-                rotateMatrix.postRotate(90.0f)
+                when (selectedCamera) {
+                    Camera.FRONT -> {
+                        rotateMatrix.postRotate(270.0f)  // use front facing camera
+                    }
+                    else -> {
+                        rotateMatrix.postRotate(90.0f)  // use back facing camera
+                    }
+                }
 
                 val rotatedBitmap = Bitmap.createBitmap(
                     imageBitmap, 0, 0, PREVIEW_WIDTH, PREVIEW_HEIGHT,
@@ -166,12 +175,22 @@ class CameraSource(
         for (cameraId in cameraManager.cameraIdList) {
             val characteristics = cameraManager.getCameraCharacteristics(cameraId)
 
-            // We don't use a front facing camera in this sample.
             val cameraDirection = characteristics.get(CameraCharacteristics.LENS_FACING)
-            if (cameraDirection != null &&
-                cameraDirection == CameraCharacteristics.LENS_FACING_FRONT
-            ) {
-                continue
+            when (selectedCamera) {
+                Camera.FRONT -> {
+                    if (cameraDirection != null &&
+                        cameraDirection == CameraCharacteristics.LENS_FACING_BACK  // don't use a back facing camera
+                    ) {
+                        continue
+                    }
+                }
+                else -> {
+                    if (cameraDirection != null &&
+                        cameraDirection == CameraCharacteristics.LENS_FACING_FRONT  // don't use a front facing camera
+                    ) {
+                        continue
+                    }
+                }
             }
             this.cameraId = cameraId
         }

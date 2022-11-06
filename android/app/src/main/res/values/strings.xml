@@ -7,10 +7,16 @@
     <string name="tfe_pe_tv_fps">Fps: %d</string>
     <string name="tfe_pe_tv_debug">DEBUG: %s</string>
     <string name="tfe_pe_tv_device">Device: </string>
+    <string name="tfe_pe_tv_camera">Camera: </string>
 
     <string-array name="tfe_pe_device_name">
         <item>CPU</item>
         <item>GPU</item>
         <item>NNAPI</item>
+    </string-array>
+
+    <string-array name="tfe_pe_camera_name">
+        <item>Back</item>
+        <item>Front</item>
     </string-array>
 </resources>
