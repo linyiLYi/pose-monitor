@@ -96,6 +96,8 @@ class CameraSource(
 
     suspend fun initCamera() {
         camera = openCamera(cameraManager, cameraId)
+        val characteristics = cameraManager.getCameraCharacteristics(cameraId)
+        val rotation = characteristics.get(CameraCharacteristics.SENSOR_ORIENTATION)!!.toFloat()
         imageReader =
             ImageReader.newInstance(PREVIEW_WIDTH, PREVIEW_HEIGHT, ImageFormat.YUV_420_888, 3)
         imageReader?.setOnImageAvailableListener({ reader ->
@@ -114,10 +116,10 @@ class CameraSource(
                 val rotateMatrix = Matrix()
                 when (selectedCamera) {
                     Camera.FRONT -> {
-                        rotateMatrix.postRotate(270.0f)  // use front facing camera
+                        rotateMatrix.postRotate(rotation)  // use front facing camera
                     }
                     else -> {
-                        rotateMatrix.postRotate(90.0f)  // use back facing camera
+                        rotateMatrix.postRotate(rotation)  // use back facing camera
                     }
                 }
 
@@ -176,23 +178,22 @@ class CameraSource(
             val characteristics = cameraManager.getCameraCharacteristics(cameraId)
 
             val cameraDirection = characteristics.get(CameraCharacteristics.LENS_FACING)
-            when (selectedCamera) {
-                Camera.FRONT -> {
-                    if (cameraDirection != null &&
-                        cameraDirection == CameraCharacteristics.LENS_FACING_BACK  // don't use a back facing camera
-                    ) {
-                        continue
+            if (cameraDirection != null) {
+                when (selectedCamera) {
+                    Camera.FRONT -> {
+                        if (cameraDirection == CameraCharacteristics.LENS_FACING_FRONT) {
+                            this.cameraId = cameraId
+                            break
+                        }
                     }
-                }
-                else -> {
-                    if (cameraDirection != null &&
-                        cameraDirection == CameraCharacteristics.LENS_FACING_FRONT  // don't use a front facing camera
-                    ) {
-                        continue
+                    Camera.BACK -> {
+                        if (cameraDirection == CameraCharacteristics.LENS_FACING_BACK) {
+                            this.cameraId = cameraId
+                            break
+                        }
                     }
                 }
             }
-            this.cameraId = cameraId
         }
     }
 
