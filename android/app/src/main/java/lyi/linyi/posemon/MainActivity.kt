@@ -350,6 +350,7 @@ class MainActivity : AppCompatActivity() {
         cameraSource?.close()
         cameraSource = null
         openCamera()
+        cameraSource?.resume()
     }
 
     private fun createPoseEstimator() {
